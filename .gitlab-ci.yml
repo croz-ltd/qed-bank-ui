@@ -1,0 +1,77 @@
+image: registry.dmz.croz.net/croz/build-image:buildah-1.10.1-oc-3.11.1-podman-1.5.1-skopeo-0.1.37
+
+stages:
+  - build
+  - quality-control
+  - package
+  - publish
+  - deploy
+
+cache:
+  paths:
+    - .m2/
+
+#############
+# NPM Build #
+#############
+npm-build:
+  stage: build
+  tags:
+    - npm
+  image: node
+  script:
+    - npm install
+      - CI=false npm run build
+  artifacts:
+    paths:
+      - ./build
+      - ./dist
+
+#############################
+# SonarQube Quality Control #
+#############################
+quality-control:
+  stage: quality-control
+  tags:
+    - maven
+  image: skilldlabs/sonar-scanner
+  script:
+    - sonar-scanner
+
+####################
+# Buildah package #
+###################
+package:
+  stage: package
+  tags:
+    - docker
+  script:
+    - buildah bud --format=docker -t registry.dmz.croz.net/qed2019/qed-bank-ui:latest .
+    - buildah push $IMAGE_TAG docker://registry.dmz.croz.net/qed2019/qed-bank-ui:latest
+
+####################################
+# Copy images to public registries #
+####################################
+publish-public:
+  stage: publish
+  before_script:
+    - buildah login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" docker.io
+    - buildah login -u "$QUAY_USERNAME" -p "$QUAY_PASSWORD" quay.io
+  script:
+    - skopeo --insecure-policy copy docker://registry.dmz.croz.net/qed2019/qed-bank-ui:latest docker://docker.io/crozltd/qed-bank-ui
+    - skopeo --insecure-policy copy docker://registry.dmz.croz.net/qed2019/qed-bank-ui:latest docker://quay.io/crozltd/qed-bank-ui
+  only:
+    - master
+
+####################
+# OpenShift Deploy #
+####################
+openshift-deploy:
+  stage: deploy
+  before_script:
+    - oc login https://os-master.lan.croz.net:8443 --token="$OPENSHIFT_AUTH_TOKEN" --insecure-skip-tls-verify
+    - oc project qed-bank
+  script:
+    - oc import-image qed-bank-ui --confirm
+  only:
+    - master
