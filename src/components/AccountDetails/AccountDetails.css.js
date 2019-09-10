@@ -1,7 +1,8 @@
+import {makeStyles} from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
 
-export default theme => ({
+const useAccountDetailsStyle = makeStyles(() => ({
   balance: {
     border: 0,
     fontSize: '24px'
@@ -13,5 +14,10 @@ export default theme => ({
   avatarGreen: {
     color: '#fff',
     backgroundColor: green[500],
-  }
-});
+  },
+  rowActions: {
+    display: 'flex',
+  },
+}));
+
+export default useAccountDetailsStyle;

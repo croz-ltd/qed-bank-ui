@@ -1,117 +1,54 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
 import axios from 'axios';
-import FormatCurrency from 'react-format-currency';
-import ReactCountryFlag from "react-country-flag";
 
-import {withStyles} from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
+import ErrorCard from "../ErrorCard/ErrorCard";
+import AccountDetails from "../AccountDetails/AccountDetails";
 
-import errorImg from '../../static/images/error.png';
-import styles from './BalanceList.css';
+export default function BalanceList({oib}) {
+  const [state, setState] = React.useState({loading: true, error: false, message: '', balances: []});
 
-class BalanceList extends Component {
-  state = {
-    error: false,
-    message: '',
-    balances: []
-  };
-
-  componentWillMount() {
-    const {oib} = this.props;
-    const instance = axios.create({
-      baseURL: "http://localhost:8081",
-      timeout: 1000,
-      method: "GET"
-    });
-    instance.get("/balances/" + oib)
-      .then(this.handleResponse)
-      .catch(this.handleError)
-  }
-
-  handleError = (response) => {
-    this.setState({
-      error: true,
-      message: "Balances not found",
-    });
-  };
-
-  handleResponse = (response) => {
-    if (response.data) {
-      this.setState({
-        error: false,
-        balances: response.data
+  React.useEffect(() => {
+    axios.get(`${process.env.REACT_APP_GATEWAY_BASE_URL}/balances/${oib}`)
+      .then(response => {
+        if (response.status === 200) {
+          setState({
+            loading: false,
+            error: false,
+            message: '',
+            balances: response.data,
+          });
+        } else {
+          setState({
+            loading: false,
+            error: true,
+            message: (response.response && response.response === 404) ? "Balances not found" : "Server error. Please contact help desk support.",
+            balances: [],
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        setState({
+          loading: false,
+          error: true,
+          message: (error.response && error.response === 404) ? "Balances not found" : "Server error. Please contact help desk support.",
+          balances: [],
+        });
       });
-    }
-  };
+  }, [oib]);
 
-  render() {
-    const {classes, history} = this.props;
-    const {balances, error, message} = this.state;
-
-    let body;
-    if (error) {
-      body = (
-        <Card className={classes.card}>
-          <CardMedia className={classes.media} image={errorImg} title="Sad polar bear"/>
-          <CardContent>
-            <Typography gutterBottom variant="headline" component="h2">Sorry</Typography>
-            <Typography component="p">{message}</Typography>
-          </CardContent>
-        </Card>
-      );
+  let body;
+  if (state.loading) {
+    body = <CircularProgress size={50}/>;
+  } else {
+    if (state.error) {
+      body = <ErrorCard title="Sorry" message={state.message}/>
     } else {
-      if (!balances) {
-        body = <CircularProgress size={50}/>
-      } else {
-        body =
-          <List>
-            {balances.map((balance, idx) => {
-              const balanceValue = <FormatCurrency currency={balance.currency} placeholder="0.00" disabled={true} value={balance.balance} className={classes.balance} />;
-              return (<ListItem key={idx}>
-                <Avatar>
-                  <ReactCountryFlag code={balance.country} svg />
-                </Avatar>
-                <ListItemText primary={balanceValue} secondary={balance.iban}/>
-                <div>
-                  <Avatar className={classes.avatarGreen} onClick={() => history.push('/transaction/' + balance.iban + '/add')}>
-                    <ArrowUpwardIcon/>
-                  </Avatar>
-                </div>
-                <div>
-                  <Avatar className={classes.avatarRed} onClick={() => history.push('/transaction/' + balance.iban + '/withdraw')}>
-                    <ArrowDownwardIcon/>
-                  </Avatar>
-                </div>
-              </ListItem>)
-            })}
-          </List>
-      }
+      body = <AccountDetails balances={state.balances} showActions/>
     }
-
-
-    return (
-      <div className={classes.root}>
-        {body}
-      </div>
-    )
   }
+
+  return body;
 }
-
-BalanceList.propTypes = {
-  classes: PropTypes.object,
-  oib: PropTypes.string
-};
-
-export default withStyles(styles)(BalanceList);
