@@ -33,9 +33,10 @@ npm-build:
 quality-control:
   stage: quality-control
   tags:
-    - maven
-  image: newtmitch/sonar-scanner
+    - npm
+  image: node
   script:
+    - npm i sonarqube-scanner -g
     - sonar-scanner
 
 ####################
