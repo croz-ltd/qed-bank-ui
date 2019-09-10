@@ -34,7 +34,7 @@ quality-control:
   stage: quality-control
   tags:
     - maven
-  image: skilldlabs/sonar-scanner
+  image: newtmitch/sonar-scanner
   script:
     - sonar-scanner
 
