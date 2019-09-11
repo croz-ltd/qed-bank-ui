@@ -21,7 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sonar": "node sonar.js"
+    "sonar": "npm run ci-lint && node sonar.js",
+    "lint": "eslint src/**/*.js --format=json -o eslint-report.json",
+    "ci-lint": "eslint src/**/*.js --format=json -o eslint-report.json || true"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +41,9 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-sonarjs": "^0.4.0",
     "sonarqube-scanner": "^2.5.0"
   }
 }
