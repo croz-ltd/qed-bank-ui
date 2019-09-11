@@ -59,12 +59,12 @@ export default function TransactionForm({iban, type}) {
     }));
   };
 
-  const performTransaction = (type, balance) => {
+  const performTransaction = (transactionType, balance) => {
     setState(oldState => ({
       ...oldState,
       altering: true,
     }));
-    axios.post(`${process.env.REACT_APP_GATEWAY_BASE_URL}/transaction/${type}`, {
+    axios.post(`${process.env.REACT_APP_GATEWAY_BASE_URL}/transaction/${transactionType}`, {
       iban: state.balance.iban,
       amount: state.amount,
     }).then(response => {
