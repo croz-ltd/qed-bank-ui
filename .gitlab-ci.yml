@@ -52,7 +52,7 @@ package:
     - docker
   script:
     - buildah bud --format=docker -t registry.dmz.croz.net/qed2019/qed-bank-ui:latest .
-    - buildah push $IMAGE_TAG docker://registry.dmz.croz.net/qed2019/qed-bank-ui:latest
+    - buildah push registry.dmz.croz.net/qed2019/qed-bank-ui:latest docker://registry.dmz.croz.net/qed2019/qed-bank-ui:latest
 
 ####################################
 # Copy images to public registries #
