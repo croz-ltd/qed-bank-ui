@@ -1,5 +1,8 @@
 image: registry.dmz.croz.net/croz/build-image:buildah-1.10.1-oc-3.11.1-podman-1.5.1-skopeo-0.1.37
 
+variables:
+  JAVA_TOOL_OPTIONS: ''
+
 stages:
   - build
   - quality-control
