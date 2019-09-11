@@ -9,6 +9,6 @@ sonarqubeScanner({
     'sonar.projectName': 'CROZ QED Bank - Frontend',
     'sonar.sources': '.',
     'sonar.inclusions' : 'src/**',
-    'sonar.eslint.reportPaths': 'report.json'
+    'sonar.eslint.reportPaths': 'eslint-report.json'
   }
 }, () => {});
