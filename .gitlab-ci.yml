@@ -4,10 +4,27 @@ variables:
   JAVA_TOOL_OPTIONS: ''
 
 stages:
+  - build
   - quality-control
   - package
   - publish
   - deploy
+
+#############
+# NPM Build #
+#############
+npm-build:
+  stage: build
+  tags:
+    - npm
+  image: node
+  script:
+    - npm install
+    - CI=false npm run build
+  artifacts:
+    paths:
+      - ./build
+      - ./dist
 
 #############################
 # SonarQube Quality Control #
