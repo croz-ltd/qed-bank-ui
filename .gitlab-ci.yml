@@ -36,8 +36,8 @@ quality-control:
     - npm
   image: node
   script:
-    - npm i sonarqube-scanner -g
-    - sonar-scanner
+    - npm install
+    - npm run sonar
 
 ####################
 # Buildah package #
