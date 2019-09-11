@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 
 import AppToolbar from '../AppToolbar/AppToolbar';
+import PropTypes from "prop-types";
 
 export default function Container({children}) {
   return (
@@ -15,3 +16,7 @@ export default function Container({children}) {
     </div>
   );
 }
+
+Container.propTypes = {
+  children: PropTypes.array.isRequired
+};

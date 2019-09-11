@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import AccountDetails from '../AccountDetails/AccountDetails';
 import ErrorCard from '../ErrorCard/ErrorCard';
 import useTransactionFormStyle from './useTransactionFormStyle';
+import PropTypes from "prop-types";
 
 export default function TransactionForm({iban, type}) {
   const [state, setState] = React.useState({
@@ -128,3 +129,8 @@ export default function TransactionForm({iban, type}) {
 
   return body;
 }
+
+TransactionForm.propTypes = {
+  iban: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
+};

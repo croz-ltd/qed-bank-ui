@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ReactCountryFlag from 'react-country-flag';
 import FormatCurrency from 'react-format-currency';
 import useReactRouter from 'use-react-router';
@@ -47,3 +48,15 @@ export default function AccountDetails({balances, showActions}) {
     </List>
   );
 }
+
+BalanceRow.propTypes = {
+  balance: PropTypes.object.isRequired,
+  classes: PropTypes.object,
+  history: PropTypes.object,
+  showActions: PropTypes.bool
+};
+
+AccountDetails.propTypes = {
+  balances: PropTypes.array.isRequired,
+  showActions: PropTypes.bool
+};

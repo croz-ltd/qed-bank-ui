@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import ErrorCard from '../ErrorCard/ErrorCard';
 import AccountDetails from '../AccountDetails/AccountDetails';
+import PropTypes from "prop-types";
 
 export default function BalanceList({oib}) {
   const [state, setState] = React.useState({loading: true, error: false, message: '', balances: []});
@@ -52,3 +53,7 @@ export default function BalanceList({oib}) {
 
   return body;
 }
+
+BalanceList.propTypes = {
+  oib: PropTypes.string.isRequired
+};

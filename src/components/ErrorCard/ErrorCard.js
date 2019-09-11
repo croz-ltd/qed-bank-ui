@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 
 import errorImg from '../../static/images/error.png';
 import useErrorCardStyle from './useErrorCardStyle';
+import PropTypes from "prop-types";
 
 export default function ErrorCard({title, message}) {
   const classes = useErrorCardStyle();
@@ -21,3 +22,8 @@ export default function ErrorCard({title, message}) {
     </Card>
   );
 }
+
+ErrorCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired
+};
