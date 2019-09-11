@@ -1,10 +1,10 @@
-import React from "react";
-import Toolbar from "@material-ui/core/Toolbar";
-import AppBar from "@material-ui/core/AppBar";
+import React from 'react';
+import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 
-import useAppToolbarStyles from "./AppToolbar.css";
-import qedLogo from "../../static/images/qed-logo.png";
+import useAppToolbarStyles from './useAppToolbarStyles';
+import qedLogo from '../../static/images/qed-logo.png';
 
 export default function AppToolbar() {
   const classes = useAppToolbarStyles();
@@ -16,5 +16,5 @@ export default function AppToolbar() {
         </Button>
       </Toolbar>
     </AppBar>
-  )
+  );
 }

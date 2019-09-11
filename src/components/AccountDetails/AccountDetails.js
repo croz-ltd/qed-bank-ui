@@ -1,6 +1,7 @@
 import React from 'react';
+import ReactCountryFlag from 'react-country-flag';
 import FormatCurrency from 'react-format-currency';
-import ReactCountryFlag from "react-country-flag";
+import useReactRouter from 'use-react-router';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,8 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
-import useAccountDetailsStyle from "./AccountDetails.css";
-import useReactRouter from "use-react-router";
+import useAccountDetailsStyle from './useAccountDetailsStyle';
 
 function BalanceRow({balance, classes, history, showActions}) {
   const currency = <FormatCurrency currency={balance.currency} placeholder="0.00" disabled={true} value={balance.amount}
@@ -23,8 +23,8 @@ function BalanceRow({balance, classes, history, showActions}) {
       {showActions && (
         <div className={classes.rowActions}>
           <Avatar component="div" className={classes.avatarGreen}
-                onClick={() => history.push(`/transaction/${balance.iban}/add`)}>
-          <ArrowUpwardIcon/>
+                  onClick={() => history.push(`/transaction/${balance.iban}/add`)}>
+            <ArrowUpwardIcon/>
           </Avatar>
           <Avatar component="div" className={classes.avatarRed}
                   onClick={() => history.push(`/transaction/${balance.iban}/withdraw`)}>
@@ -33,7 +33,7 @@ function BalanceRow({balance, classes, history, showActions}) {
         </div>
       )}
     </ListItem>
-  )
+  );
 }
 
 export default function AccountDetails({balances, showActions}) {

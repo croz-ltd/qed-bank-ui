@@ -1,5 +1,5 @@
 import React from 'react';
-import TransactionForm from '../../components/TransactionForm/TransactionForm'
+import TransactionForm from '../../components/TransactionForm/TransactionForm';
 
 export default function Transaction({match: {params}}) {
   return (

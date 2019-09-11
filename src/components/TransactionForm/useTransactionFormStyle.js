@@ -6,11 +6,11 @@ const useTransactionFormStyle = makeStyles(() => ({
   balance: {
     border: 0,
     fontSize: '24px',
-    marginBottom: '24px'
+    marginBottom: '24px',
   },
   btnRed: {
     color: '#fff',
-    backgroundColor: red[500]
+    backgroundColor: red[500],
   },
   btnGreen: {
     color: '#fff',
@@ -21,8 +21,8 @@ const useTransactionFormStyle = makeStyles(() => ({
     margin: '8px',
     borderRadius: '4px',
     padding: '12px 24px',
-    color: 'white'
-  }
+    color: 'white',
+  },
 }));
 
 export default useTransactionFormStyle;

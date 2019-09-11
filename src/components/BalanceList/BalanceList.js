@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import axios from 'axios';
 
-import CircularProgress from "@material-ui/core/CircularProgress";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import ErrorCard from "../ErrorCard/ErrorCard";
-import AccountDetails from "../AccountDetails/AccountDetails";
+import ErrorCard from '../ErrorCard/ErrorCard';
+import AccountDetails from '../AccountDetails/AccountDetails';
 
 export default function BalanceList({oib}) {
   const [state, setState] = React.useState({loading: true, error: false, message: '', balances: []});
@@ -23,17 +23,17 @@ export default function BalanceList({oib}) {
           setState({
             loading: false,
             error: true,
-            message: (response.response && response.response === 404) ? "Balances not found" : "Server error. Please contact help desk support.",
+            message: (response.response && response.response === 404) ? 'Balances not found' : 'Server error. Please contact help desk support.',
             balances: [],
           });
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
         setState({
           loading: false,
           error: true,
-          message: (error.response && error.response === 404) ? "Balances not found" : "Server error. Please contact help desk support.",
+          message: (error.response && error.response === 404) ? 'Balances not found' : 'Server error. Please contact help desk support.',
           balances: [],
         });
       });
@@ -44,9 +44,9 @@ export default function BalanceList({oib}) {
     body = <CircularProgress size={50}/>;
   } else {
     if (state.error) {
-      body = <ErrorCard title="Sorry" message={state.message}/>
+      body = <ErrorCard title="Sorry" message={state.message}/>;
     } else {
-      body = <AccountDetails balances={state.balances} showActions/>
+      body = <AccountDetails balances={state.balances} showActions/>;
     }
   }
 

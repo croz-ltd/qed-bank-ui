@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import FormatCurrency from 'react-format-currency';
-import CircularProgress from "@material-ui/core/CircularProgress";
+import useReactRouter from 'use-react-router';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 
-import AccountDetails from "../../components/AccountDetails/AccountDetails";
-import useTransactionFormStyle from './TransactionForm.css';
-import ErrorCard from "../ErrorCard/ErrorCard";
-import useReactRouter from "use-react-router";
+import AccountDetails from '../AccountDetails/AccountDetails';
+import ErrorCard from '../ErrorCard/ErrorCard';
+import useTransactionFormStyle from './useTransactionFormStyle';
 
 export default function TransactionForm({iban, type}) {
   const [state, setState] = React.useState({
@@ -30,14 +30,14 @@ export default function TransactionForm({iban, type}) {
             ...oldState,
             loading: false,
             error: false,
-            balance: response.data
+            balance: response.data,
           }));
         } else {
           setState(oldState => ({
             ...oldState,
             loading: false,
             error: true,
-            message: (response.response && response.response === 404) ? "Balances not found" : "Server error. Please contact help desk support."
+            message: (response.response && response.response === 404) ? 'Balances not found' : 'Server error. Please contact help desk support.',
           }));
         }
       })
@@ -47,7 +47,7 @@ export default function TransactionForm({iban, type}) {
           ...oldState,
           loading: false,
           error: true,
-          message: (error.response && error.response === 404) ? "Balances not found" : "Server error. Please contact help desk support."
+          message: (error.response && error.response === 404) ? 'Balances not found' : 'Server error. Please contact help desk support.',
         }));
       });
   }, [iban]);
@@ -55,14 +55,14 @@ export default function TransactionForm({iban, type}) {
   const handleInputChange = name => event => {
     setState(oldState => ({
       ...oldState,
-      [name]: event.value
+      [name]: event.value,
     }));
   };
 
   const performTransaction = (type, balance) => {
     setState(oldState => ({
       ...oldState,
-      altering: true
+      altering: true,
     }));
     axios.post(`${process.env.REACT_APP_GATEWAY_BASE_URL}/transaction/${type}`, {
       iban: state.balance.iban,
@@ -89,7 +89,7 @@ export default function TransactionForm({iban, type}) {
         loading: false,
         altering: false,
         error: true,
-        message: (error.response && error.response === 404) ? "Balances not found" : "Server error. Please contact help desk support."
+        message: (error.response && error.response === 404) ? 'Balances not found' : 'Server error. Please contact help desk support.',
       }));
     });
   };
@@ -99,7 +99,7 @@ export default function TransactionForm({iban, type}) {
     body = <CircularProgress size={50}/>;
   } else {
     if (state.error) {
-      body = <ErrorCard title="Sorry" message={state.message}/>
+      body = <ErrorCard title="Sorry" message={state.message}/>;
     } else {
       body = (
         <div>
@@ -108,8 +108,8 @@ export default function TransactionForm({iban, type}) {
               Currently is not possible to execute transaction. Please try again.
             </div>
           )}
-          <h2>{type === 'add' ? "Adding funds" : "Withdraw funds"}</h2>
-          <h4>{type === 'add' ? "To account:" : "From acconut:"}</h4>
+          <h2>{type === 'add' ? 'Adding funds' : 'Withdraw funds'}</h2>
+          <h4>{type === 'add' ? 'To account:' : 'From acconut:'}</h4>
           <AccountDetails balances={[state.balance]}/>
           <h4>Amount:</h4>
           <FormatCurrency currency={state.balance.currency} placeholder="0.00" className={classes.balance}
@@ -117,12 +117,12 @@ export default function TransactionForm({iban, type}) {
           {state.altering && <CircularProgress size={50}/>}
           {!state.altering && (
             <Button href="#" variant="contained" className={type === 'add' ? classes.btnGreen : classes.btnRed}
-                    onClick={() => performTransaction(type, state.balance, history)}>
-              {type === 'add' ? "Top-up account" : "Withdraw from account"}
+                    onClick={() => performTransaction(type, state.balance)}>
+              {type === 'add' ? 'Top-up account' : 'Withdraw from account'}
             </Button>
           )}
         </div>
-      )
+      );
     }
   }
 

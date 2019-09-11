@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Card from "@material-ui/core/Card";
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
 
-import errorImg from "../../static/images/error.png";
-import useErrorCardStyle from './ErrorCard.css';
+import errorImg from '../../static/images/error.png';
+import useErrorCardStyle from './useErrorCardStyle';
 
 export default function ErrorCard({title, message}) {
   const classes = useErrorCardStyle();
@@ -20,4 +20,4 @@ export default function ErrorCard({title, message}) {
       </CardContent>
     </Card>
   );
-};
+}

@@ -5,11 +5,11 @@ import green from '@material-ui/core/colors/green';
 const useAccountDetailsStyle = makeStyles(() => ({
   balance: {
     border: 0,
-    fontSize: '24px'
+    fontSize: '24px',
   },
   avatarRed: {
     color: '#fff',
-    backgroundColor: red[500]
+    backgroundColor: red[500],
   },
   avatarGreen: {
     color: '#fff',

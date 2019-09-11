@@ -1,5 +1,5 @@
 import React from 'react';
-import useReactRouter from "use-react-router";
+import useReactRouter from 'use-react-router';
 
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -9,7 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 const accounts = [
   {name: 'Tinker Bell', oib: '11111111111'},
-  {name: 'Peter Pan', oib: '22222222222'}
+  {name: 'Peter Pan', oib: '22222222222'},
 ];
 
 export default function Index() {
