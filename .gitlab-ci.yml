@@ -36,6 +36,7 @@ quality-control:
     - npm
   image: node
   script:
+    - npm install --only=dev
     - npm install
     - npm run sonar
 
